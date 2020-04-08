@@ -7,7 +7,6 @@ import { Notification } from './DTO/Notification';
 import { UniqueIdProvider } from './adapters/UniqueIdProvider';
 import { CompletionCallbackWrapper } from './adapters/CompletionCallbackWrapper';
 import { NotificationCategory } from './interfaces/NotificationCategory';
-import { NotificationChannel } from './interfaces/NotificationChannel';
 import { NotificationsIOS } from './NotificationsIOS';
 import { NotificationsAndroid } from './NotificationsAndroid';
 import { NotificationFactory } from './DTO/NotificationFactory';
@@ -91,13 +90,6 @@ export class NotificationsRoot {
    */
   public isRegisteredForRemoteNotifications(): Promise<boolean> {
     return this.commands.isRegisteredForRemoteNotifications();
-  }
-
-  /**
-   * setNotificationChannel
-   */
-  public setNotificationChannel(notificationChannel: NotificationChannel) {
-    return this.android.setNotificationChannel(notificationChannel);
   }
 
   /**

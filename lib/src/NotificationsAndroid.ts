@@ -1,6 +1,5 @@
 import { Commands } from './commands/Commands';
 import { Platform } from 'react-native';
-import { NotificationChannel } from './interfaces/NotificationChannel';
 
 export class NotificationsAndroid {
   constructor(private readonly commands: Commands) {
@@ -20,12 +19,5 @@ export class NotificationsAndroid {
   */
   public registerRemoteNotifications() {
     this.commands.refreshToken();
-  }
-
-  /**
-   * setNotificationChannel
-   */
-  public setNotificationChannel(notificationChannel: NotificationChannel) {
-    return this.commands.setNotificationChannel(notificationChannel);
   }
 }
