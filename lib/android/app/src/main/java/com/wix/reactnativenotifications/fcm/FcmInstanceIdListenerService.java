@@ -21,14 +21,20 @@ public class FcmInstanceIdListenerService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage message){
         Bundle bundle = message.toIntent().getExtras();
-        if(BuildConfig.DEBUG) Log.d(LOGTAG, "New message from FCM: " + bundle);
+        // Access urban airship push id -> Filter it out if send by airship
+        String airshipPushId = message.getData().get("com.urbanairship.push.PUSH_ID");
 
-        try {
-            final IPushNotification notification = PushNotification.get(getApplicationContext(), bundle);
-            notification.onReceived();
-        } catch (IPushNotification.InvalidNotificationException e) {
-            // An FCM message, yes - but not the kind we know how to work with.
-            if(BuildConfig.DEBUG) Log.v(LOGTAG, "FCM message handling aborted", e);
+        if(BuildConfig.DEBUG) Log.d(LOGTAG, "New message from FCM: " + bundle);
+        if(BuildConfig.DEBUG) Log.d(LOGTAG, "Found Airship push id: " + airshipPushId);
+
+        if (airshipPushId == null) {
+            try {
+                final IPushNotification notification = PushNotification.get(getApplicationContext(), bundle);
+                notification.onReceived();
+            } catch (IPushNotification.InvalidNotificationException e) {
+                // An FCM message, yes - but not the kind we know how to work with.
+                if(BuildConfig.DEBUG) Log.v(LOGTAG, "FCM message handling aborted", e);
+            }
         }
     }
 }
